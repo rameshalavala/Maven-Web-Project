@@ -79,7 +79,7 @@
 		</dependency>
   </dependencies>
 
-	<!--<distributionManagement>
+	<distributionManagement>
 	    <repository>
 	      <id>nexus</id>
 	      <name>Releases Nexus Repository</name>
@@ -90,7 +90,7 @@
 	      <name>Snapshot Nexus Repository </name>
 	      <url>http://localhost:9090/rameshalavala/repository/maven-snapshots/</url>
 	    </snapshotRepository>
-	</distributionManagement>-->
+	</distributionManagement>
 	
 	
   <build>
