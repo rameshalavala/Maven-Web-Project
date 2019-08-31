@@ -1,0 +1,1 @@
+[![Build Status](https://dev.azure.com/ramesha0549/pipelinedemo/_apis/build/status/pipelinedemo-Maven-CI?branchName=master)](https://dev.azure.com/ramesha0549/pipelinedemo/_build/latest?definitionId=1&branchName=master)
