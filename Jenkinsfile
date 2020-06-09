@@ -1,20 +1,27 @@
 #!groovy
 
 node {
-	   
-	stage('Checkout'){
+        stage('Checkout'){
 
-          checkout scm
+          checkout 'scm'
        }
 
-       stage('BuildArtifact'){
-          // build step
-          bat 'mvn install'
+       stage('Compiling'){
+
+          sh 'mvn clean install'
        }
 	   
       stage('Sonar') {
                     //add stage sonar
-                    bat 'mvn sonar:sonar'
+                    sh 'mvn sonar:sonar'
                 }
-       
+	stage('artifact') {
+                    //add stage sonar
+                    archive 'target/*.war'
+                }
+    
+	  /* stage('Deploy') {
+                    
+                    sh 'mvn sonar:sonar'
+                }*/
 }
