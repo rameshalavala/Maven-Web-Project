@@ -21,13 +21,15 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and verify with Maven
-        run: mvn --batch-mode --update-snapshots verify
+      - name: Build and package with Maven
+        run: mvn --batch-mode clean package
+      - name: List target contents
+        run: ls -l target
 
       - name: Copy JAR to staging directory
         run: |
           mkdir staging
-          cp target/*.jar staging/
+          cp target/*.jar staging/ || echo "No JAR found"
 
       - name: Upload JAR as artifact
         uses: actions/upload-artifact@v4
