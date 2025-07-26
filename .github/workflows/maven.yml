@@ -23,17 +23,19 @@ jobs:
 
       - name: Build and package with Maven
         run: mvn --batch-mode clean package
+
       - name: List target contents
-        run: ls -l target
+        run: |
+          echo "Checking for JAR in ./target"
+          ls -lh target || echo "target directory not found"
 
       - name: Copy JAR to staging directory
         run: |
-          mkdir staging
-          cp target/*.jar staging/ || echo "No JAR found"
+          mkdir -p staging
+          cp target/*.jar staging/ || echo "No JAR file found in target/"
 
-      - name: Upload JAR as artifact
+      - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: Package
           path: staging
-
