@@ -21,21 +21,34 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and package with Maven
-        run: mvn --batch-mode clean package
-
-      - name: List target contents
+      - name: Build with Maven and generate log
         run: |
-          echo "Checking for JAR in ./target"
-          ls -lh target || echo "target directory not found"
+          mvn --batch-mode clean package | tee build.log
 
-      - name: Copy JAR to staging directory
+      - name: List target directory contents
+        run: ls -lh target
+
+      - name: Prepare artifacts
         run: |
           mkdir -p staging
-          cp target/*.jar staging/ || echo "No JAR file found in target/"
+          cp target/*.jar staging/ 2>/dev/null || echo "No JAR found"
+          mkdir -p test-reports
+          cp -r target/surefire-reports/* test-reports/ 2>/dev/null || echo "No test reports found"
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Package
+          name: JAR-Package
           path: staging
+
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test-Reports
+          path: test-reports
+
+      - name: Upload Maven Build Log
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-Log
+          path: build.log
